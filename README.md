@@ -2,15 +2,15 @@
 
 ### Overview
 
-* Figma
-* Images
+- Project description
+- Technologies used
+- Link to website
 
-**Figma**
+**Project description**
+This project is a website with a social element. The website incorporates interactive profile elements which the user can edit, and hopefully an interactive photo gallery in the future.
 
-* [Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+**Technologies used**
+The project utilizes HTML, CSS as well as Javascript to add "edit profile" functionality.
 
-**Images**
-
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-
-Have fun with JavaScript!
+**Link to website**
+https://rodiak88.github.io/web_project_4/index.html
