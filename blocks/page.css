@@ -1,6 +1,5 @@
 .page {
-  max-width: 880px;
-  margin: 0 auto;
+  background-color: #000;
   font-family: "Inter", Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -13,14 +12,19 @@
   text-rendering: optimizeLegibility;
 }
 
+.page__container {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 890px) {
-  .page {
+  .page__container {
     max-width: 95%;
   }
 }
 
 @media screen and (max-width: 690px) {
-  .page {
+  .page__container {
     max-width: 100%;
   }
 }
