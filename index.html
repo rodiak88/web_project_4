@@ -43,102 +43,18 @@
           ></button>
         </section>
         <section class="gallery">
-          <ul class="gallery__list">
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo1.jpg"
-                  alt="Yosemite Valley"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Yosemite Valley</h2>
-                <button class="card__like-btn" type="button"></button>
-              </div>
-            </li>
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo2.jpg"
-                  alt="Lake Louise"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Lake Louise</h2>
-                <button class="card__like-btn" type="button"></button>
-              </div>
-            </li>
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo3.jpg"
-                  alt="Bald Mountains"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Bald Mountains</h2>
-                <button class="card__like-btn" type="button"></button>
-              </div>
-            </li>
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo4.jpg"
-                  alt="Latemar"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Latemar</h2>
-                <button class="card__like-btn" type="button"></button>
-              </div>
-            </li>
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo5.jpg"
-                  alt="Vanoise National Park"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Vanoise National Park</h2>
-                <button class="card__like-btn">
-                  <img
-                    src="./images/icon_heart.svg"
-                    alt="Like"
-                    class="card__like-icn"
-                  />
-                </button>
-              </div>
-            </li>
-            <li class="card">
-              <div class="card__photo-container">
-                <img
-                  src="./images/gallery_photo6.jpg"
-                  alt="Lago di Braies"
-                  class="card__photo"
-                />
-              </div>
-              <div class="card__description">
-                <h2 class="card__title">Lago di Braies</h2>
-                <button class="card__like-btn" type="button"></button>
-              </div>
-            </li>
-          </ul>
+          <ul class="gallery__list"></ul>
         </section>
       </main>
-      <div class="popup">
+      <div id="edit-popup" class="popup">
         <div class="popup__container">
           <button
+            id="edit-closeBtn"
             class="popup__close-btn"
             type="button"
             aria-label="Close window"
           ></button>
-          <form name="edit-form" class="popup__form">
+          <form id="edit-form" name="edit-form" class="popup__form">
             <h2 class="popup__title">Edit profile</h2>
             <fieldset class="popup__fieldset">
               <input
@@ -161,10 +77,67 @@
         </div>
       </div>
 
+      <div id="add-popup" class="popup">
+        <div class="popup__container popup__container_type_new-place">
+          <button
+            id="add-closeBtn"
+            class="popup__close-btn popup__close-btn_type_place"
+            type="button"
+            aria-label="Close window"
+          ></button>
+          <form id="add-form" name="edit-form" class="popup__form">
+            <h2 class="popup__title">New place</h2>
+            <fieldset class="popup__fieldset popup__fieldset_type_new-place">
+              <input
+                type="text"
+                name="title"
+                id="title"
+                class="popup__input"
+                placeholder="Title"
+              />
+              <input
+                type="text"
+                name="link"
+                id="link"
+                class="popup__input"
+                placeholder="Image link"
+              />
+            </fieldset>
+            <button type="submit" class="popup__submit-btn">Create</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="photo-viewer-popup" class="popup">
+        <div class="popup__container popup__container_type_photoPreview">
+          <button
+            id="viewer-closeBtn"
+            class="popup__close-btn popup__close-btn_type_place"
+            type="button"
+            aria-label="Close window"
+          ></button>
+          <img class="popup__photo" src="#" alt="#" />
+          <p class="popup__photoTitle"></p>
+        </div>
+      </div>
+
       <footer class="footer">
         <p class="footer__copyright">© 2022 Around The U.S.</p>
       </footer>
     </div>
-    <script src="./scripts/script.js"></script>
+
+    <template id="card-template">
+      <li class="card">
+        <div class="card__photo-container" role="img">
+          <button class="card__delete-btn" type="button"></button>
+        </div>
+        <div class="card__description">
+          <h2 class="card__title"></h2>
+          <button class="card__like-btn" type="button"></button>
+        </div>
+      </li>
+    </template>
+    <script src="./scripts/cards.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
