@@ -60,23 +60,25 @@
               <input
                 type="text"
                 name="name"
-                id="name"
+                id="name-input"
                 class="popup__input"
                 placeholder="Name"
                 required
                 minlength="2"
                 maxlength="40"
               />
+              <span class="popup__input-error name-input-error"></span>
               <input
                 type="text"
                 name="description"
-                id="description"
+                id="description-input"
                 class="popup__input"
                 placeholder="Description"
                 required
                 minlength="2"
                 maxlength="200"
               />
+              <span class="popup__input-error description-input-error"></span>
             </fieldset>
             <button type="submit" class="popup__submit-btn">Save</button>
           </form>
@@ -97,21 +99,23 @@
               <input
                 type="text"
                 name="title"
-                id="title"
+                id="title-input"
                 class="popup__input"
                 placeholder="Title"
                 required
                 minlength="1"
                 maxlength="30"
               />
+              <span class="popup__input-error title-input-error"></span>
               <input
                 type="url"
                 name="link"
-                id="link"
+                id="link-input"
                 class="popup__input"
                 placeholder="Image link"
                 required
               />
+              <span class="popup__input-error link-input-error"></span>
             </fieldset>
             <button type="submit" class="popup__submit-btn">Create</button>
           </form>
@@ -147,8 +151,8 @@
         </div>
       </li>
     </template>
-    <script src="./scripts/validate.js"></script>
     <script src="./scripts/cards.js"></script>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

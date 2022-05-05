@@ -55,21 +55,23 @@ function initiateGallery() {
 
 function openPopup(popup) {
   popup.classList.add("popup__active");
+  document.addEventListener("keydown", handleEscKey);
+  document.addEventListener("click", handlePopupOverlayClick);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup__active");
+  document.removeEventListener("keydown", handleEscKey);
+  document.removeEventListener("click", handlePopupOverlayClick);
 }
 
 function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
   profileNameTxt.textContent = editFormElement["name"].value;
   profileDescTxt.textContent = editFormElement["description"].value;
   closePopup(editProfilePopup);
 }
 
 function handleAddFormSubmit(evt) {
-  evt.preventDefault();
   const newCard = {
     name: addFormElement["title"].value,
     link: addFormElement["link"].value,
@@ -78,11 +80,30 @@ function handleAddFormSubmit(evt) {
   closePopup(addPlacePopup);
 }
 
-initiateGallery();
+function handleEscKey(evt) {
+  const popupToClose = document.querySelector(".popup__active");
+  if (evt.key === "Escape") {
+    closePopup(popupToClose);
+  }
+}
+
+function handlePopupOverlayClick(evt) {
+  const popupToClose = document.querySelector(".popup__active");
+  if (popupToClose && evt.target === popupToClose) {
+    closePopup(popupToClose);
+  }
+}
 
 editProfileBtn.addEventListener("click", function () {
+  const editSubmitBtn = editFormElement.querySelector(
+    validationConfig.submitButtonSelector
+  );
+  const editInputList = Array.from(
+    editFormElement.querySelectorAll(validationConfig.inputSelector)
+  );
   editFormElement["name"].value = profileNameTxt.textContent;
   editFormElement["description"].value = profileDescTxt.textContent;
+  toggleButtonState(editInputList, editSubmitBtn, validationConfig);
   openPopup(editProfilePopup);
 });
 
@@ -103,5 +124,7 @@ photoPreviewCloseBtn.addEventListener("click", function () {
   closePopup(photoPreviewPopup);
 });
 
+enableValidation(validationConfig);
 editFormElement.addEventListener("submit", handleProfileFormSubmit);
 addFormElement.addEventListener("submit", handleAddFormSubmit);
+initiateGallery();
