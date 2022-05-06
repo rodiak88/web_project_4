@@ -79,9 +79,11 @@ const enableValidation = (config) => {
 
 const resetValidation = (popup, config) => {
   const formElement = popup.querySelector(config.formSelector);
+  const buttonElement = popup.querySelector(config.submitButtonSelector);
   const inputList = Array.from(
     formElement.querySelectorAll(config.inputSelector)
   );
+  toggleButtonState(inputList, buttonElement, config);
   inputList.forEach((input) => {
     if (input.classList.contains(config.inputErrorClass)) {
       input.classList.remove(config.inputErrorClass);

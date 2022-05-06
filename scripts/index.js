@@ -52,15 +52,12 @@ function initiateGallery() {
 function openPopup(popup) {
   popup.classList.add("popup__active");
   document.addEventListener("keydown", handleEscKey);
-  setPopupCloseMouseEventListeners();
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup__active");
   document.removeEventListener("keydown", handleEscKey);
-  removePopupCloseMouseEventListeners();
   if (popup.id !== "photo-viewer-popup") {
-    resetValidation(popup, validationConfig);
   }
 }
 
@@ -102,33 +99,21 @@ function setPopupCloseMouseEventListeners() {
   });
 }
 
-function removePopupCloseMouseEventListeners() {
-  const popupsList = document.querySelectorAll(".popup");
-  popupsList.forEach((popup) => {
-    popup.removeEventListener("mousedown", handlePopupCloseMouseEvent);
-  });
-}
-
 editProfileBtn.addEventListener("click", function () {
-  const editSubmitBtn = editFormElement.querySelector(
-    validationConfig.submitButtonSelector
-  );
-  const editInputList = Array.from(
-    editFormElement.querySelectorAll(validationConfig.inputSelector)
-  );
   editFormElement["name"].value = profileNameTxt.textContent;
   editFormElement["description"].value = profileDescTxt.textContent;
-  toggleButtonState(editInputList, editSubmitBtn, validationConfig);
+  resetValidation(editProfilePopup, validationConfig);
   openPopup(editProfilePopup);
 });
 
 addPlaceBtn.addEventListener("click", function () {
   addFormElement.reset();
-  enableValidation(validationConfig);
+  resetValidation(addPlacePopup, validationConfig);
   openPopup(addPlacePopup);
 });
 
-enableValidation(validationConfig);
 editFormElement.addEventListener("submit", handleProfileFormSubmit);
 addFormElement.addEventListener("submit", handleAddFormSubmit);
+enableValidation(validationConfig);
+setPopupCloseMouseEventListeners();
 initiateGallery();
