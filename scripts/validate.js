@@ -76,3 +76,16 @@ const enableValidation = (config) => {
     setInputEventListeners(formElement, config);
   });
 };
+
+const resetValidation = (popup, config) => {
+  const formElement = popup.querySelector(config.formSelector);
+  const inputList = Array.from(
+    formElement.querySelectorAll(config.inputSelector)
+  );
+  inputList.forEach((input) => {
+    if (input.classList.contains(config.inputErrorClass)) {
+      input.classList.remove(config.inputErrorClass);
+      hideInputError(formElement, input, config);
+    }
+  });
+};
