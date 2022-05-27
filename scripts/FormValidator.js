@@ -36,30 +36,30 @@ export class FormValidator {
     });
   }
 
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.disabled = true;
-      buttonElement.classList.add(this._settings.inactiveButtonClass);
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.disabled = true;
+      this._buttonElement.classList.add(this._settings.inactiveButtonClass);
     } else {
-      buttonElement.disabled = false;
-      buttonElement.classList.remove(this._settings.inactiveButtonClass);
+      this._buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
     }
   }
 
   _setInputEventListeners() {
-    const inputList = Array.from(
+    this._inputList = Array.from(
       this._formElement.querySelectorAll(this._settings.inputSelector)
     );
 
-    const buttonElement = this._formElement.querySelector(
+    this._buttonElement = this._formElement.querySelector(
       this._settings.submitButtonSelector
     );
-    this._toggleButtonState(inputList, buttonElement);
+    this._toggleButtonState();
 
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
   }
@@ -68,22 +68,13 @@ export class FormValidator {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-    this._setInputEventListeners(this._formElement);
+    this._setInputEventListeners();
   }
 
   resetValidation() {
-    const buttonElement = this._formElement.querySelector(
-      this._settings.submitButtonSelector
-    );
-    const inputList = Array.from(
-      this._formElement.querySelectorAll(this._settings.inputSelector)
-    );
-    this._toggleButtonState(inputList, buttonElement);
-    inputList.forEach((input) => {
-      if (input.classList.contains(this._settings.inputErrorClass)) {
-        input.classList.remove(this._settings.inputErrorClass);
-        this._hideInputError(input);
-      }
+    this._toggleButtonState();
+    this._inputList.forEach((input) => {
+      this._hideInputError(input);
     });
   }
 }
