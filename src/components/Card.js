@@ -1,14 +1,9 @@
-import { photoPreviewPopup } from "./index.js";
-import { openPopup } from "./utils.js";
-
-const popupPhoto = document.querySelector(".popup__photo");
-const popupTitle = document.querySelector(".popup__photoTitle");
-
-export class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
+export default class Card {
+  constructor({ data, handleCardClick }, cardSelector) {
+    this._title = data.title;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -24,8 +19,8 @@ export class Card {
     this._cardPhoto = this._element.querySelector(".card__photo-container");
     this._cardTitle = this._element.querySelector(".card__title");
     this._cardPhoto.style.backgroundImage = `url(${this._link})`;
-    this._cardPhoto.ariaLabel = this._name;
-    this._cardTitle.textContent = this._name;
+    this._cardPhoto.ariaLabel = this._title;
+    this._cardTitle.textContent = this._title;
     this._setEventListeners();
     return this._element;
   }
@@ -36,13 +31,6 @@ export class Card {
 
   _handleLikeCard() {
     this._likeBtn.classList.toggle("card__like-btn_active");
-  }
-
-  _handleOpenPopup() {
-    popupPhoto.src = this._link;
-    popupPhoto.alt = this._name;
-    popupTitle.textContent = this._name;
-    openPopup(photoPreviewPopup);
   }
 
   _setEventListeners() {
@@ -59,7 +47,7 @@ export class Card {
     });
 
     this._cardPhoto.addEventListener("click", () => {
-      this._handleOpenPopup();
+      this._handleCardClick({ title: this._title, link: this._link });
     });
   }
 }

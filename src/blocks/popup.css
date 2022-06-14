@@ -35,11 +35,13 @@
   max-width: 75vw;
   border-radius: 0px;
   background: none;
+  box-shadow: none;
 }
 
 .popup__photo {
   max-width: 100%;
   max-height: 75vh;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 }
 
 .popup__photoTitle {
