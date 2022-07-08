@@ -4,15 +4,19 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  _checkServerResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._baseURL}/cards`, {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -21,10 +25,7 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -37,11 +38,7 @@ export default class Api {
         about: data.description,
       }),
     }).then((res) => {
-      if (res.ok) {
-        console.log(res);
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -53,11 +50,7 @@ export default class Api {
         avatar: data.link,
       }),
     }).then((res) => {
-      if (res.ok) {
-        console.log(res);
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -70,11 +63,7 @@ export default class Api {
         link: data.link,
       }),
     }).then((res) => {
-      if (res.ok) {
-        console.log(res);
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -84,10 +73,7 @@ export default class Api {
       method: method,
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status} - ${res.statusText}`);
+      return this._checkServerResponse(res);
     });
   }
 
@@ -96,12 +82,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(
-        `Error deleting card: ${res.status} - ${res.statusText}`
-      );
+      return this._checkServerResponse(res);
     });
   }
 

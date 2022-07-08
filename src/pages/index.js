@@ -58,7 +58,8 @@ const renderCard = (item) => {
           .catch((err) => console.log(err));
       },
       handleDeleteCard: () => {
-        const deleteCardPopup = new PopupWithForm("#delete-card-popup", () => {
+        deleteCardPopup.open();
+        deleteCardPopup.changeSubmitHandler(() => {
           deleteCardPopup.changeButtonText("Deleting...");
           api
             .deleteCardData(card.getId())
@@ -68,11 +69,9 @@ const renderCard = (item) => {
             .catch((err) => console.log(err))
             .finally(() => {
               deleteCardPopup.close();
+              deleteCardPopup.changeButtonText("Yes");
             });
         });
-        deleteCardPopup.setEventListeners();
-        deleteCardPopup.changeButtonText("Yes");
-        deleteCardPopup.open();
       },
     },
     cardTemplateSelector
@@ -102,12 +101,12 @@ const addFormPopoup = new PopupWithForm("#add-popup", (inputsObj) => {
     .addCardData(inputsObj)
     .then((data) => {
       renderCard(data);
+      addFormPopoup.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      addFormPopoup.close();
       addFormPopoup.changeButtonText("Create");
     });
 });
@@ -118,12 +117,12 @@ const editFormPopup = new PopupWithForm("#edit-popup", (inputsObj) => {
     .updateUserInfo(inputsObj)
     .then((data) => {
       userInfoPanel.setUserInfo(data);
+      editFormPopup.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      editFormPopup.close();
       editFormPopup.changeButtonText("Save");
     });
 });
@@ -134,13 +133,15 @@ const editAvatarPopup = new PopupWithForm("#edit-avatar-popup", (inputsObj) => {
     .updateUserAvatar(inputsObj)
     .then((data) => {
       userInfoPanel.setAvatar(data.avatar);
+      editAvatarPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      editAvatarPopup.close();
-      avatarEditBtn.changeButtonText("Save");
+      editAvatarPopup.changeButtonText("Save");
     });
 });
+
+const deleteCardPopup = new PopupWithForm("#delete-card-popup");
 
 editProfileBtn.addEventListener("click", function () {
   const { name, about } = userInfoPanel.getUserInfo();
@@ -151,16 +152,17 @@ editProfileBtn.addEventListener("click", function () {
 });
 
 addPlaceBtn.addEventListener("click", function () {
-  formValidators["add-form"].resetValidation();
   addFormPopoup.open();
+  formValidators["add-form"].resetValidation();
 });
 
 avatarEditBtn.addEventListener("click", function () {
-  formValidators["edit-avatar-form"].resetValidation();
   editAvatarPopup.open();
+  formValidators["edit-avatar-form"].resetValidation();
 });
 
 initiateFormValidators(popupFormSettings);
 addFormPopoup.setEventListeners();
 editFormPopup.setEventListeners();
 editAvatarPopup.setEventListeners();
+deleteCardPopup.setEventListeners();
