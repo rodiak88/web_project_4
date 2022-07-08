@@ -17,6 +17,11 @@
   margin: 0 auto;
 }
 
+.page__error {
+  color: #ff0000;
+  font-size: 14pt;
+}
+
 @media screen and (max-width: 890px) {
   .page__container {
     max-width: 95%;

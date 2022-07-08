@@ -90,6 +90,10 @@
   line-height: 1.2;
 }
 
+.popup__title_type_delete {
+  margin-bottom: 38px;
+}
+
 .popup__fieldset {
   margin: 54px 0 48px;
   padding: 0;
