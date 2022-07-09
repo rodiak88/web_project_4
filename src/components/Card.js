@@ -28,13 +28,13 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._cardPhoto = this._element.querySelector(".card__photo-container");
-    const cardTitle = this._element.querySelector(".card__title");
+    this._cardTitle = this._element.querySelector(".card__title");
     this._deleteBtn = this._element.querySelector(".card__delete-btn");
     this._likeBtn = this._element.querySelector(".card__like-btn");
     this._cardLikesElement = this._element.querySelector(".card__like-count");
     this._cardPhoto.style.backgroundImage = `url(${this._link})`;
     this._cardPhoto.ariaLabel = this._title;
-    cardTitle.textContent = this._title;
+    this._cardTitle.textContent = this._title;
     if (!this.isOwner()) {
       this._deleteBtn.remove();
     }
