@@ -8,7 +8,6 @@ import {
   formValidators,
   addPlaceBtn,
   editProfileBtn,
-  editFormElement,
   avatarEditBtn,
 } from "../utils/constants.js";
 
@@ -45,9 +44,7 @@ const renderCard = (item) => {
       cardData: item,
       userId: currentUserId,
       handleCardClick: (item) => {
-        const cardPopup = new PopupWithImage(item, "#photo-viewer-popup");
-        cardPopup.open();
-        cardPopup.setEventListeners();
+        cardPopup.open(item);
       },
       handleLikeCard: () => {
         api
@@ -60,16 +57,16 @@ const renderCard = (item) => {
       handleDeleteCard: () => {
         deleteCardPopup.open();
         deleteCardPopup.changeSubmitHandler(() => {
-          deleteCardPopup.changeButtonText("Deleting...");
+          deleteCardPopup.renderLoadingMsg(true, "Deleting...");
           api
             .deleteCardData(card.getId())
             .then(() => {
               card.deleteCard();
+              deleteCardPopup.close();
             })
             .catch((err) => console.log(err))
             .finally(() => {
-              deleteCardPopup.close();
-              deleteCardPopup.changeButtonText("Yes");
+              deleteCardPopup.renderLoadingMsg(false);
             });
         });
       },
@@ -96,7 +93,7 @@ const userInfoPanel = new UserInfo({
 });
 
 const addFormPopoup = new PopupWithForm("#add-popup", (inputsObj) => {
-  addFormPopoup.changeButtonText("Saving...");
+  addFormPopoup.renderLoadingMsg(true);
   api
     .addCardData(inputsObj)
     .then((data) => {
@@ -107,12 +104,12 @@ const addFormPopoup = new PopupWithForm("#add-popup", (inputsObj) => {
       console.log(err);
     })
     .finally(() => {
-      addFormPopoup.changeButtonText("Create");
+      addFormPopoup.renderLoadingMsg(false);
     });
 });
 
 const editFormPopup = new PopupWithForm("#edit-popup", (inputsObj) => {
-  editFormPopup.changeButtonText("Saving...");
+  editFormPopup.renderLoadingMsg(true);
   api
     .updateUserInfo(inputsObj)
     .then((data) => {
@@ -123,12 +120,12 @@ const editFormPopup = new PopupWithForm("#edit-popup", (inputsObj) => {
       console.log(err);
     })
     .finally(() => {
-      editFormPopup.changeButtonText("Save");
+      editFormPopup.renderLoadingMsg(false);
     });
 });
 
 const editAvatarPopup = new PopupWithForm("#edit-avatar-popup", (inputsObj) => {
-  editAvatarPopup.changeButtonText("Saving...");
+  editAvatarPopup.renderLoadingMsg(true);
   api
     .updateUserAvatar(inputsObj)
     .then((data) => {
@@ -137,18 +134,17 @@ const editAvatarPopup = new PopupWithForm("#edit-avatar-popup", (inputsObj) => {
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      editAvatarPopup.changeButtonText("Save");
+      editAvatarPopup.renderLoadingMsg(false);
     });
 });
+
+const cardPopup = new PopupWithImage("#photo-viewer-popup");
 
 const deleteCardPopup = new PopupWithForm("#delete-card-popup");
 
 editProfileBtn.addEventListener("click", function () {
-  const { name, about } = userInfoPanel.getUserInfo();
   editFormPopup.open();
-  editFormElement["name"].value = name;
-  editFormElement["description"].value = about;
-  formValidators["edit-form"].resetValidation();
+  editFormPopup.setInputValues(userInfoPanel.getUserInfo());
 });
 
 addPlaceBtn.addEventListener("click", function () {
@@ -165,4 +161,5 @@ initiateFormValidators(popupFormSettings);
 addFormPopoup.setEventListeners();
 editFormPopup.setEventListeners();
 editAvatarPopup.setEventListeners();
+cardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();

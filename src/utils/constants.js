@@ -13,14 +13,10 @@ export const popupFormSettings = {
 };
 
 export const formValidators = {};
-export const editFormElement = document.getElementById("edit-form");
 
 export const editProfileBtn = document.querySelector(".profile__edit-btn");
 export const addPlaceBtn = document.querySelector(".profile__add-btn");
 export const avatarEditBtn = document.querySelector(".avatar__editBtn");
-
-export const popupImage = document.querySelector(".popup__photo");
-export const popupCaption = document.querySelector(".popup__photoTitle");
 
 export const api = new Api({
   baseURL: "https://around.nomoreparties.co/v1/cohort-3-en",

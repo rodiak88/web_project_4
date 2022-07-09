@@ -8,40 +8,49 @@ export default class PopupWithForm extends Popup {
     this._formElement = this._popup.querySelector(
       popupFormSettings.formSelector
     );
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(popupFormSettings.inputSelector)
+    );
+    this._submitBtnElement = this._formElement.querySelector(
+      popupFormSettings.submitButtonSelector
+    );
+    this._submitBtnText = this._submitBtnElement.textContent;
   }
 
   _getInputValues() {
-    const inputList = Array.from(
-      this._popup.querySelectorAll(popupFormSettings.inputSelector)
-    );
     const inputsObj = {};
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputsObj[inputElement.name] = inputElement.value;
     });
     return inputsObj;
   }
 
-  setEventListeners() {
-    super.setEventListeners();
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    });
   }
 
-  changeButtonText(text) {
-    this._formElement.querySelector(".popup__submit-btn").textContent = text;
+  setEventListeners() {
+    super.setEventListeners();
+    this._formElement.addEventListener("submit", this._formSubmit);
+  }
+
+  renderLoadingMsg(isLoading, message = "Saving...") {
+    if (isLoading) {
+      this._submitBtnElement.textContent = message;
+    } else {
+      this._submitBtnElement.textContent = this._submitBtnText;
+    }
   }
 
   changeSubmitHandler(newHandler) {
     this._handleFormSubmit = newHandler;
   }
 
-  open() {
-    super.open();
-    this._formElement.reset();
-    this._formElement.addEventListener("submit", this._formSubmit);
-  }
-
   close() {
-    this._formElement.removeEventListener("submit", this._formSubmit);
     super.close();
+    this._formElement.reset();
   }
 
   _formSubmit = () => {
